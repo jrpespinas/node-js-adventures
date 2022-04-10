@@ -1,0 +1,25 @@
+{
+  "name": "express-crud",
+  "version": "1.0.0",
+  "description": "Learning backend development with express",
+  "main": "app.js",
+  "scripts": {
+    "server": "nodemon server/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jrpespinas/node-js-adventures.git"
+  },
+  "author": "Jan Rodolf Espinas",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jrpespinas/node-js-adventures/issues"
+  },
+  "homepage": "https://github.com/jrpespinas/node-js-adventures#readme",
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "nodemon": "^2.0.15"
+  }
+}
