@@ -1,3 +1,8 @@
+const fs = require("fs");
+const tours = JSON.parse(
+  fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`)
+);
+
 /**
  * Updates a goal given an id.
  *
@@ -8,7 +13,7 @@
  * @param {string} res response
  *
  */
-const getAllTours = (res, req) => {
+const getAllTours = (req, res) => {
   res.status(200).json({
     status: "success",
     results: tours.length,

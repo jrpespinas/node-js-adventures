@@ -7,11 +7,8 @@ const port = process.env.PORT;
 
 app.use(express.json());
 
-const tours = JSON.parse(
-  fs.readFileSync(`${__dirname}/dev-data/data/tours-simple.json`)
-);
-
-app.use("/", require("./routes/tours"));
+app.use("/api/v1/tours", require("./routes/tours"));
+app.use("/api/v1/users", require("./routes/users"));
 
 app.listen(port, () => {
   console.log(`App running on port ${port}`);
