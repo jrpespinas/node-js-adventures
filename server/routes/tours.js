@@ -7,8 +7,10 @@ const {
   deleteTour,
   createTour,
 } = require("../controllers/tours");
+const { checkBody, checkId } = require("../middleware/tours");
 
-router.route("/").get(getAllTours).post(createTour);
+router.param("id", checkId);
+router.route("/").get(getAllTours).post(checkBody, createTour);
 router.route("/:id").get(getTour).patch(updateTour).delete(deleteTour);
 
 module.exports = router;

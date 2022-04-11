@@ -60,13 +60,6 @@ const getTour = (req, res) => {
  *
  */
 const updateTour = (req, res) => {
-  if (parseInt(req.params.id) > tours.length) {
-    return res.status(404).json({
-      status: "fail",
-      message: "invalid id",
-    });
-  }
-
   res.status(200).json({
     status: "success",
     data: {
@@ -86,13 +79,6 @@ const updateTour = (req, res) => {
  *
  */
 const deleteTour = (req, res) => {
-  if (parseInt(req.params.id) > tours.length) {
-    return res.status(404).json({
-      status: "fail",
-      message: "invalid id",
-    });
-  }
-
   res.status(200).json({
     status: "success",
     data: null,
