@@ -1,4 +1,4 @@
-const fs = require("fs");
+const fs = require('fs');
 const tours = JSON.parse(
   fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`)
 );
@@ -15,7 +15,7 @@ const tours = JSON.parse(
  */
 const getAllTours = (req, res) => {
   res.status(200).json({
-    status: "success",
+    status: 'success',
     results: tours.length,
     data: { tours },
   });
@@ -38,13 +38,13 @@ const getTour = (req, res) => {
 
   if (!tour) {
     return res.status(404).json({
-      status: "fail",
-      message: "invalid id",
+      status: 'fail',
+      message: 'invalid id',
     });
   }
 
   res.status(200).json({
-    status: "success",
+    status: 'success',
     data: { tour },
   });
 };
@@ -61,9 +61,9 @@ const getTour = (req, res) => {
  */
 const updateTour = (req, res) => {
   res.status(200).json({
-    status: "success",
+    status: 'success',
     data: {
-      tour: "Updated tour here",
+      tour: 'Updated tour here',
     },
   });
 };
@@ -80,7 +80,7 @@ const updateTour = (req, res) => {
  */
 const deleteTour = (req, res) => {
   res.status(200).json({
-    status: "success",
+    status: 'success',
     data: null,
   });
 };
@@ -105,7 +105,7 @@ const createTour = (req, res) => {
     JSON.stringify(tours),
     (err) => {
       res.status(201).json({
-        status: "success",
+        status: 'success',
         data: {
           tour: newTour,
         },

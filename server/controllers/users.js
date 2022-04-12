@@ -10,8 +10,8 @@
  */
 const getAllUsers = (req, res) => {
   res.status(500).json({
-    status: "error",
-    message: "Not implemented",
+    status: 'error',
+    message: 'Not implemented',
   });
 };
 
@@ -27,8 +27,8 @@ const getAllUsers = (req, res) => {
  */
 const getUser = (req, res) => {
   res.status(500).json({
-    status: "error",
-    message: "Not implemented",
+    status: 'error',
+    message: 'Not implemented',
   });
 };
 
@@ -44,8 +44,8 @@ const getUser = (req, res) => {
  */
 const updateUser = (req, res) => {
   res.status(500).json({
-    status: "error",
-    message: "Not implemented",
+    status: 'error',
+    message: 'Not implemented',
   });
 };
 
@@ -61,8 +61,8 @@ const updateUser = (req, res) => {
  */
 const deleteUser = (req, res) => {
   res.status(500).json({
-    status: "error",
-    message: "Not implemented",
+    status: 'error',
+    message: 'Not implemented',
   });
 };
 
@@ -78,8 +78,8 @@ const deleteUser = (req, res) => {
  */
 const createUser = (req, res) => {
   res.status(500).json({
-    status: "error",
-    message: "Not implemented",
+    status: 'error',
+    message: 'Not implemented',
   });
 };
 
