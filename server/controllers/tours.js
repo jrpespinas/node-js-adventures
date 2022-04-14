@@ -2,6 +2,7 @@ const { query } = require('express');
 const { json } = require('express/lib/response');
 const fs = require('fs');
 const Tour = require('../models/tours');
+const { APIFilters } = require('../utils/queryFilters');
 
 /**
  * Updates a goal given an id.
@@ -41,50 +42,15 @@ const createTour = async (req, res) => {
  */
 const getAllTours = async (req, res) => {
   try {
-    // build query
-    // Filtering
-    const queryObj = { ...req.query };
-    const excludedFields = ['page', 'limit', 'fields'];
-    excludedFields.forEach((params) => delete queryObj[params]);
-
-    // Advanced filtering
-    let queryString = JSON.stringify(queryObj);
-    queryString = queryString.replace(
-      /\b(gte|gt|lte|lt)\b/g,
-      (match) => `$${match}`
-    );
-
-    let query = Tour.find(JSON.parse(queryString));
-
-    // Sorting
-    if (req.query.sort) {
-      const sortBy = req.query.sort.split(',').join(' ');
-      query = query.sort(sortBy);
-    } else {
-      query = query.sort('-createdAt');
-    }
-
-    // limiting fields
-    if (req.query.fields) {
-      const fields = req.query.fields.split(',').join(' ');
-      query = query.select(fields);
-    } else {
-      query = query.select('-__v');
-    }
-
     // pagination
-    const page = parseInt(req.query.page);
-    const limit = parseInt(req.query.limit) || 100;
-    const skip = (page - 1) * limit;
-    query = query.skip(skip).limit(limit);
-
-    if (req.query.page) {
-      const numTours = await Tour.countDocuments();
-      if (skip >= numTours) throw new Error('This page does not exist');
-    }
 
     // execute query
-    const tours = await query;
+    const features = new APIFilters(Tour.find(), req.query)
+      .filter()
+      .sort()
+      .limitFields()
+      .paginate();
+    const tours = await features.query;
 
     // send response
     res.status(200).json({
@@ -180,10 +146,22 @@ const deleteTour = async (req, res) => {
   }
 };
 
+const getTourStats = async (req, res) => {
+  try {
+    const stats = Tour.aggregate([]);
+  } catch (err) {
+    res.status(404).json({
+      status: 'fail',
+      message: err,
+    });
+  }
+};
+
 module.exports = {
   getAllTours,
   getTour,
   updateTour,
   deleteTour,
   createTour,
+  getTourStats,
 };
