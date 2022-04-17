@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const slugify = require('slugify');
 
 const Schema = mongoose.Schema(
   {
@@ -8,6 +9,7 @@ const Schema = mongoose.Schema(
       unique: true,
       trim: true,
     },
+    slug: String,
     duration: {
       type: Number,
       required: [true, 'A tour must have a duration'],
@@ -52,6 +54,10 @@ const Schema = mongoose.Schema(
       select: false,
     },
     startDates: [Date],
+    secretTour: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     toJSON: { virtuals: true },
@@ -61,6 +67,30 @@ const Schema = mongoose.Schema(
 
 Schema.virtual('durationWeeks').get(function () {
   return this.duration / 7;
+});
+
+// DOCUMENT MIDDLEWARE: runs before .create() and .save()
+// Convert the name to lower case
+Schema.pre('save', function (next) {
+  this.slug = slugify(this.name, { lower: true });
+  next();
+});
+
+// QUERY MIDDLEWARE: runs before any .find()
+// Prevent the display of `secretTour`
+Schema.pre(/^find/, function (next) {
+  this.find({ secretTour: { $ne: true } });
+
+  this.start = Date.now();
+  next();
+});
+
+// AGGREGATION MIDDLEWARE: runs before .aggregate()
+// Prevent the inclusion of `secretTour` in the existing calculation
+// defined by this.pipeline()
+Schema.pre('aggregate', function (next) {
+  this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });
+  next();
 });
 
 module.exports = mongoose.model('Tour', Schema);
